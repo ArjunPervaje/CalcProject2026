@@ -36,6 +36,10 @@
 
 # Visual Studio cache directory
 .vs/
+.vscode/
+
+# Ignore Rider and VS Code workspace files
+.idea/
 
 # Gradle cache directory
 .gradle/
