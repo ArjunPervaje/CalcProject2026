@@ -7560,6 +7560,7 @@ MonoBehaviour:
   blackYPrefab: {fileID: 8089824871895176617, guid: d593283eb97cc3d40bd8a422030d6fb7, type: 3}
   blackSigmaPrefab: {fileID: 1288213163833544274, guid: 2d0b0736394c87645ad12d1e404b7377, type: 3}
   blackDeltaPrefab: {fileID: 1156774681229527687, guid: b6b23893216f8dd47a4ea6df6640fcab, type: 3}
+  isWhite: 1
 --- !u!1 &1042752492
 GameObject:
   m_ObjectHideFlags: 0
