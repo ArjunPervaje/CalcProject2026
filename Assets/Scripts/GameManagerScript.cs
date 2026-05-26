@@ -62,7 +62,7 @@ public class GameManagerScript : MonoBehaviour
         }
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (acceptingPlayerInput)
         {

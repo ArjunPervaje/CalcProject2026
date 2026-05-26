@@ -7561,6 +7561,33 @@ MonoBehaviour:
   blackSigmaPrefab: {fileID: 1288213163833544274, guid: 2d0b0736394c87645ad12d1e404b7377, type: 3}
   blackDeltaPrefab: {fileID: 1156774681229527687, guid: b6b23893216f8dd47a4ea6df6640fcab, type: 3}
   isWhite: 1
+  clickAction:
+    m_Name: Click
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 93f49b9c-9234-43b3-8962-fb07ef8d782e
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  pointerPosAction:
+    m_Name: Pointer Pos
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: f3aac8b5-aae3-4281-b222-895f349d9495
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  restartAction:
+    m_Name: Restart
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 10a6634a-a8ea-4830-9c28-7926ccd61f35
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
 --- !u!1 &1042752492
 GameObject:
   m_ObjectHideFlags: 0
