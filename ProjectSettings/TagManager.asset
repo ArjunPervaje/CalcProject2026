@@ -6,6 +6,7 @@ TagManager:
   tags:
   - BlackPiece
   - WhitePiece
+  - GameManager
   layers:
   - Default
   - TransparentFX

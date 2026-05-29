@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8896939832310455164}
+  - component: {fileID: -8709009299909747758}
   m_Layer: 0
   m_Name: white king
   m_TagString: WhitePiece
@@ -32,6 +33,19 @@ Transform:
   - {fileID: 262365577047347113}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-8709009299909747758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 615540424376613560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c41aa34f3efb635408b7a540788a0d1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Piece
+  pieceType: 11
 --- !u!1 &672647113352046597
 GameObject:
   m_ObjectHideFlags: 0
