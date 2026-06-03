@@ -28,6 +28,8 @@ public class GameManagerScript : MonoBehaviour
     public GameObject blackDeltaEpsilonPrefab;
     
     private GameObject[,] board;
+
+    private bool gotQuestionRight = false;
     
     // Camera (reference to the scene's main camera)
     private GameObject mainCamera;
@@ -38,6 +40,10 @@ public class GameManagerScript : MonoBehaviour
     private Quaternion rotation;
 
     private GameObject selectedSquare = null;
+
+    public QuestionManagerScript questionManager;
+
+    private bool lastResult;
     void Start()
     {
         int rows = 8;
@@ -58,6 +64,8 @@ public class GameManagerScript : MonoBehaviour
         location by doing board[x, y].transform.position.x or .z for x and z respectfully */
 
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+        
+        GameRestart();
     }
 
     void FixedUpdate()
@@ -112,42 +120,6 @@ public class GameManagerScript : MonoBehaviour
                             HighlightAvailableSquares(selectedSquare);
                         }
                     }
-                    /*
-                    if (selectedSquare != null && selectedSquare != hit.collider.gameObject && selectedSquare.gameObject.GetComponent<SquareScript>().CanMoveToSquare(hit.collider.gameObject.GetComponent<SquareScript>().GetX(), hit.collider.gameObject.GetComponent<SquareScript>().GetZ()))
-                    {
-                        if (!hit.collider.gameObject.GetComponent<SquareScript>().HasPiece()) // Moves to Empty Space
-                        {
-                            hit.collider.gameObject.GetComponent<SquareScript>()
-                                .AssignPiece(selectedSquare.GetComponent<SquareScript>().GetPiece());
-                            selectedSquare.GetComponent<SquareScript>().UnassignPiece();
-                            Debug.Log("Unassigned " + hit.collider.gameObject.GetComponent<SquareScript>().GetPiece() +
-                                      " from " + selectedSquare.name + " and assigned it to " +
-                                      hit.collider.gameObject.name);
-                            selectedSquare = null;
-                            DisableAllHighlights();
-                            StartCoroutine(SwitchSides());
-                        }
-                        else if (!hit.collider.gameObject.GetComponent<SquareScript>().GetPiece().CompareTag(tagToCheck)) // Takes opponent Piece
-                        {
-                            Destroy(hit.collider.gameObject.GetComponent<SquareScript>().GetPiece());
-                            hit.collider.gameObject.GetComponent<SquareScript>()
-                                .AssignPiece(selectedSquare.GetComponent<SquareScript>().GetPiece());
-                            selectedSquare.GetComponent<SquareScript>().UnassignPiece();
-                            Debug.Log("Unassigned " + hit.collider.gameObject.GetComponent<SquareScript>().GetPiece() +
-                                      " from " + selectedSquare.name + " and assigned it to " +
-                                      hit.collider.gameObject.name);
-                            selectedSquare = null;
-                            DisableAllHighlights();
-                            StartCoroutine(SwitchSides());
-                        }
-                        else // Selects another Piece
-                        {
-                            selectedSquare = hit.collider.gameObject;
-                            Debug.Log("Selected: " + selectedSquare.name + " Type: " + hit.collider.gameObject.GetComponent<SquareScript>().GetPieceType());
-                            HighlightAvailableSquares(selectedSquare);
-                        }
-                    } */
-                    // above is legacy selection mode
 
                     if (selectedSquare != null && selectedSquare != hit.collider.gameObject) // has a selected piece and clicks another square
                     {
@@ -166,11 +138,20 @@ public class GameManagerScript : MonoBehaviour
                             DisableAllHighlights();
                             if (isWhite)
                             {
-                                if (hit.collider.gameObject.GetComponent<SquareScript>().GetPieceType() == Piece.PieceType.Sigma &&
-                                    hit.collider.gameObject.GetComponent<SquareScript>().GetZ() == 7)
+                                SquareScript square = hit.collider.gameObject.GetComponent<SquareScript>();
+
+                                if (square.GetPieceType() == Piece.PieceType.Sigma && square.GetZ() == 7)
                                 {
-                                    Destroy(hit.collider.gameObject.GetComponent<SquareScript>().GetPiece());
-                                    hit.collider.gameObject.GetComponent<SquareScript>().AssignPiece(Instantiate(whiteInfiniteSumPrefab, transform.position, rotation));
+                                    Quaternion rot = rotation;
+                                    Vector3 pos = transform.position;
+
+                                    StartCoroutine(RunQuiz(correct =>
+                                    {
+                                        if (!correct) return;
+
+                                        Destroy(square.GetPiece());
+                                        square.AssignPiece(Instantiate(whiteInfiniteSumPrefab, pos, rot));
+                                    }));
                                 }
                             }
                             else
@@ -339,9 +320,34 @@ public class GameManagerScript : MonoBehaviour
                 }
             }
         }
-        
-        
+        Debug.Log(lastResult);
     }
+    
+    private IEnumerator AskQuestion()
+    {
+        questionManager.DisplayQuestion();
+
+        char choice = '\0';
+        while (choice == '\0')
+        {
+            if (Keyboard.current != null && Keyboard.current.aKey.wasPressedThisFrame) choice = 'A';
+            else if (Keyboard.current != null && Keyboard.current.bKey.wasPressedThisFrame) choice = 'B';
+            else if (Keyboard.current != null && Keyboard.current.cKey.wasPressedThisFrame) choice = 'C';
+            else if (Keyboard.current != null && Keyboard.current.dKey.wasPressedThisFrame) choice = 'D';
+
+            yield return null;
+        }
+
+
+        gotQuestionRight = questionManager.InputAnswer(choice);
+    }
+    
+    private IEnumerator RunQuiz(Action<bool> onComplete)
+    {
+        yield return StartCoroutine(AskQuestion());
+        onComplete?.Invoke(lastResult);
+    }
+
 
     public void GameRestart()
     {
