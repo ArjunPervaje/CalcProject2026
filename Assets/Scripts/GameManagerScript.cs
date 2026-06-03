@@ -43,7 +43,7 @@ public class GameManagerScript : MonoBehaviour
 
     public QuestionManagerScript questionManager;
 
-    private bool lastResult;
+    
     void Start()
     {
         int rows = 8;
@@ -101,213 +101,204 @@ public class GameManagerScript : MonoBehaviour
                         
                     //}
                     Debug.Log("Hit: " + hit.collider.gameObject.name);
-                    String tagToCheck;
-                    if (isWhite)
+                    GameObject hitObject = hit.collider.gameObject;
+                    SquareScript hitSquare = hitObject.GetComponent<SquareScript>();
+                    string tagToCheck = isWhite ? "WhitePiece" : "BlackPiece";
+
+                    // If nothing selected yet, try selecting this square's piece
+                    if (selectedSquare == null && hitSquare.HasPiece())
                     {
-                        tagToCheck = "WhitePiece";
-                    }
-                    else
-                    {
-                        tagToCheck = "BlackPiece";
-                    }
-                
-                    if (selectedSquare == null && hit.collider.gameObject.GetComponent<SquareScript>().HasPiece())
-                    {
-                        if (hit.collider.gameObject.GetComponent<SquareScript>().GetPiece().CompareTag(tagToCheck))
+                        if (hitSquare.GetPiece().CompareTag(tagToCheck))
                         {
-                            selectedSquare = hit.collider.gameObject;
-                            Debug.Log("Selected: " + selectedSquare.name + " Type: " + hit.collider.gameObject.GetComponent<SquareScript>().GetPieceType());
+                            selectedSquare = hitObject;
+                            Debug.Log("Selected: " + selectedSquare.name + " Type: " + hitSquare.GetPieceType());
                             HighlightAvailableSquares(selectedSquare);
                         }
                     }
 
-                    if (selectedSquare != null && selectedSquare != hit.collider.gameObject) // has a selected piece and clicks another square
+                    // If a piece is selected and we clicked a different square, handle movement/interaction
+                    if (selectedSquare != null && selectedSquare != hitObject)
                     {
-                        if (selectedSquare.gameObject.GetComponent<SquareScript>().CanMoveToSquare(
-                                hit.collider.gameObject.GetComponent<SquareScript>().GetX(),
-                                hit.collider.gameObject.GetComponent<SquareScript>().GetZ())
-                            && !hit.collider.gameObject.GetComponent<SquareScript>().HasPiece()) // moves to possible empty square
-                        {
-                            hit.collider.gameObject.GetComponent<SquareScript>()
-                                .AssignPiece(selectedSquare.GetComponent<SquareScript>().GetPiece());
-                            selectedSquare.GetComponent<SquareScript>().UnassignPiece();
-                            Debug.Log("Unassigned " + hit.collider.gameObject.GetComponent<SquareScript>().GetPiece() +
-                                      " from " + selectedSquare.name + " and assigned it to " +
-                                      hit.collider.gameObject.name);
-                            selectedSquare = null;
-                            DisableAllHighlights();
-                            if (isWhite)
-                            {
-                                SquareScript square = hit.collider.gameObject.GetComponent<SquareScript>();
+                        SquareScript selectedSquareScript = selectedSquare.GetComponent<SquareScript>();
+                        int targetX = hitSquare.GetX();
+                        int targetZ = hitSquare.GetZ();
 
-                                if (square.GetPieceType() == Piece.PieceType.Sigma && square.GetZ() == 7)
+                        bool canMoveToTarget = selectedSquareScript.CanMoveToSquare(targetX, targetZ);
+                        bool targetHasPiece = hitSquare.HasPiece();
+
+                        // Move to empty square
+                        if (canMoveToTarget && !targetHasPiece)
+                        {
+                            bool tryingToPromote = ((isWhite && targetZ == 7) || (!isWhite && targetZ == 0));
+                            if (selectedSquareScript.GetPieceType() == Piece.PieceType.Sigma && tryingToPromote)
+                            {
+                                // Promotion flow for white
+                                if (isWhite && targetZ == 7)
                                 {
                                     Quaternion rot = rotation;
                                     Vector3 pos = transform.position;
-
+                                    GameObject oldSelected = selectedSquare;
+                                    acceptingPlayerInput = false;
                                     StartCoroutine(RunQuiz(correct =>
                                     {
-                                        if (!correct) return;
+                                        if (correct)
+                                        {
+                                            Destroy(oldSelected.GetComponent<SquareScript>().GetPiece());
+                                            hitSquare.AssignPiece(Instantiate(whiteInfiniteSumPrefab, pos, rot));
+                                        }
 
-                                        Destroy(square.GetPiece());
-                                        square.AssignPiece(Instantiate(whiteInfiniteSumPrefab, pos, rot));
+                                        // cleanup & switch sides regardless of result
+                                        selectedSquare = null;
+                                        DisableAllHighlights();
+                                        StartCoroutine(SwitchSides());
                                     }));
+                                    return;
+                                }
+
+                                // Promotion flow for black
+                                if (!isWhite && targetZ == 0)
+                                {
+                                    Quaternion rot = rotation;
+                                    Vector3 pos = transform.position;
+                                    GameObject oldSelected = selectedSquare;
+                                    acceptingPlayerInput = false;
+                                    StartCoroutine(RunQuiz(correct =>
+                                    {
+                                        if (correct)
+                                        {
+                                            Destroy(oldSelected.GetComponent<SquareScript>().GetPiece());
+                                            hitSquare.AssignPiece(Instantiate(blackInfiniteSumPrefab, pos, rot));
+                                        }
+
+                                        // cleanup & switch sides regardless of result
+                                        selectedSquare = null;
+                                        DisableAllHighlights();
+                                        StartCoroutine(SwitchSides());
+                                    }));
+                                    return;
                                 }
                             }
                             else
                             {
-                                if (hit.collider.gameObject.GetComponent<SquareScript>().GetPieceType() == Piece.PieceType.Sigma &&
-                                    hit.collider.gameObject.GetComponent<SquareScript>().GetZ() == 7)
-                                {
-                                    Destroy(hit.collider.gameObject.GetComponent<SquareScript>().GetPiece());
-                                    hit.collider.gameObject.GetComponent<SquareScript>().AssignPiece(Instantiate(blackInfiniteSumPrefab, transform.position, rotation));
-                                }
+                                hitSquare.AssignPiece(selectedSquareScript.GetPiece());
+                                selectedSquareScript.UnassignPiece();
+                                Debug.Log("Unassigned " + hitSquare.GetPiece() + " from " + selectedSquare.name + " and assigned it to " + hitObject.name);
                             }
+
+                            selectedSquare = null;
+                            DisableAllHighlights();
                             StartCoroutine(SwitchSides());
                         }
-                        else if (selectedSquare.gameObject.GetComponent<SquareScript>().CanMoveToSquare(
-                                     hit.collider.gameObject.GetComponent<SquareScript>().GetX(),
-                                     hit.collider.gameObject.GetComponent<SquareScript>().GetZ())
-                                 && hit.collider.gameObject.GetComponent<SquareScript>().HasPiece()) // if it moves to a possible square that has another piece on it
+                        // Move to square that has another piece
+                        else if (canMoveToTarget && targetHasPiece)
                         {
-                            if (hit.collider.gameObject.GetComponent<SquareScript>().GetPiece().CompareTag(tagToCheck)) // if it's trying to combine
+                            if (hitSquare.GetPiece().CompareTag(tagToCheck)) // combining
                             {
-                                Piece.PieceType typeOfInitialPiece = selectedSquare.GetComponent<SquareScript>().GetPieceType();
-                                Destroy(selectedSquare.gameObject.GetComponent<SquareScript>().GetPiece());
+                                Piece.PieceType typeOfInitialPiece = selectedSquareScript.GetPieceType();
+                                Destroy(selectedSquareScript.GetPiece());
                                 if (typeOfInitialPiece != Piece.PieceType.Sigma)
                                 {
-                                    Destroy(hit.collider.gameObject.GetComponent<SquareScript>().GetPiece());
+                                    Destroy(hitSquare.GetPiece());
                                 }
                                 else
                                 {
-                                    selectedSquare.gameObject.GetComponent<SquareScript>().AssignPiece(hit.collider.gameObject.GetComponent<SquareScript>().GetPiece());
-                                    hit.collider.gameObject.GetComponent<SquareScript>().UnassignPiece();
-                                    if (isWhite)
-                                    {
-                                        hit.collider.gameObject.GetComponent<SquareScript>().AssignPiece(Instantiate(whiteSigmaPrefab, transform.position, rotation));
-                                    }
-                                    else
-                                    {
-                                        hit.collider.gameObject.GetComponent<SquareScript>().AssignPiece(Instantiate(blackSigmaPrefab, transform.position, rotation));
-                                    }
+                                    selectedSquareScript.AssignPiece(hitSquare.GetPiece());
+                                    hitSquare.UnassignPiece();
+                                    hitSquare.AssignPiece(isWhite ? Instantiate(whiteSigmaPrefab, transform.position, rotation) : Instantiate(blackSigmaPrefab, transform.position, rotation));
                                 }
+
                                 switch (typeOfInitialPiece)
                                 {
                                     case Piece.PieceType.X:
-                                        if (isWhite)
-                                        {
-                                            hit.collider.gameObject.GetComponent<SquareScript>()
-                                                .AssignPiece(Instantiate(whiteFunctionPrefab, transform.position, rotation));
-                                        }
-                                        else
-                                        {
-                                            hit.collider.gameObject.GetComponent<SquareScript>()
-                                                .AssignPiece(Instantiate(blackFunctionPrefab, transform.position, rotation));
-                                        }
-
+                                        hitSquare.AssignPiece(isWhite ? Instantiate(whiteFunctionPrefab, transform.position, rotation) : Instantiate(blackFunctionPrefab, transform.position, rotation));
                                         break;
                                     case Piece.PieceType.Y:
-                                        if (isWhite)
-                                        {
-                                            hit.collider.gameObject.GetComponent<SquareScript>()
-                                                .AssignPiece(Instantiate(whiteFunctionPrefab, transform.position, rotation));
-                                        }
-                                        else
-                                        {
-                                            hit.collider.gameObject.GetComponent<SquareScript>()
-                                                .AssignPiece(Instantiate(blackFunctionPrefab, transform.position, rotation));
-                                        }
-
+                                        hitSquare.AssignPiece(isWhite ? Instantiate(whiteFunctionPrefab, transform.position, rotation) : Instantiate(blackFunctionPrefab, transform.position, rotation));
                                         break;
                                     case Piece.PieceType.Delta:
-                                        if (isWhite)
-                                        {
-                                            hit.collider.gameObject.GetComponent<SquareScript>()
-                                                .AssignPiece(Instantiate(whiteDeltaEpsilonPrefab, transform.position, rotation));
-                                        }
-                                        else
-                                        {
-                                            hit.collider.gameObject.GetComponent<SquareScript>()
-                                                .AssignPiece(Instantiate(blackDeltaEpsilonPrefab, transform.position, rotation));
-                                        }
-
+                                        hitSquare.AssignPiece(isWhite ? Instantiate(whiteDeltaEpsilonPrefab, transform.position, rotation) : Instantiate(blackDeltaEpsilonPrefab, transform.position, rotation));
                                         break;
                                     case Piece.PieceType.Epsilon:
-                                        if (isWhite)
-                                        {
-                                            hit.collider.gameObject.GetComponent<SquareScript>()
-                                                .AssignPiece(Instantiate(whiteDeltaEpsilonPrefab, transform.position, rotation));
-                                        }
-                                        else
-                                        {
-                                            hit.collider.gameObject.GetComponent<SquareScript>()
-                                                .AssignPiece(Instantiate(blackDeltaEpsilonPrefab, transform.position, rotation));
-                                        }
-
+                                        hitSquare.AssignPiece(isWhite ? Instantiate(whiteDeltaEpsilonPrefab, transform.position, rotation) : Instantiate(blackDeltaEpsilonPrefab, transform.position, rotation));
                                         break;
                                 }
+
                                 selectedSquare = null;
                                 if (isWhite)
                                 {
-                                    if (hit.collider.gameObject.GetComponent<SquareScript>().GetPieceType() == Piece.PieceType.Sigma &&
-                                        hit.collider.gameObject.GetComponent<SquareScript>().GetZ() == 7)
+                                    if (hitSquare.GetPieceType() == Piece.PieceType.Sigma && hitSquare.GetZ() == 7)
                                     {
-                                        Destroy(hit.collider.gameObject.GetComponent<SquareScript>().GetPiece());
-                                        hit.collider.gameObject.GetComponent<SquareScript>().AssignPiece(Instantiate(whiteInfiniteSumPrefab, transform.position, rotation));
+                                        Destroy(hitSquare.GetPiece());
+                                        hitSquare.AssignPiece(Instantiate(whiteInfiniteSumPrefab, transform.position, rotation));
                                     }
                                 }
                                 else
                                 {
-                                    if (hit.collider.gameObject.GetComponent<SquareScript>().GetPieceType() == Piece.PieceType.Sigma &&
-                                        hit.collider.gameObject.GetComponent<SquareScript>().GetZ() == 7)
+                                    if (hitSquare.GetPieceType() == Piece.PieceType.Sigma && hitSquare.GetZ() == 7)
                                     {
-                                        Destroy(hit.collider.gameObject.GetComponent<SquareScript>().GetPiece());
-                                        hit.collider.gameObject.GetComponent<SquareScript>().AssignPiece(Instantiate(blackInfiniteSumPrefab, transform.position, rotation));
+                                        Destroy(hitSquare.GetPiece());
+                                        hitSquare.AssignPiece(Instantiate(blackInfiniteSumPrefab, transform.position, rotation));
                                     }
                                 }
+
                                 DisableAllHighlights();
                                 StartCoroutine(SwitchSides());
                             }
                             else // capturing
                             {
-                                Destroy(hit.collider.gameObject.GetComponent<SquareScript>().GetPiece());
-                                hit.collider.gameObject.GetComponent<SquareScript>()
-                                    .AssignPiece(selectedSquare.GetComponent<SquareScript>().GetPiece());
-                                selectedSquare.GetComponent<SquareScript>().UnassignPiece();
-                                Debug.Log("Unassigned " + hit.collider.gameObject.GetComponent<SquareScript>().GetPiece() +
-                                          " from " + selectedSquare.name + " and assigned it to " +
-                                          hit.collider.gameObject.name);
-                                selectedSquare = null;
-                                if (isWhite)
+                                // require quiz to complete capture
+                                GameObject oldSelected = selectedSquare;
+                                SquareScript oldSelectedScript = selectedSquareScript;
+                                GameObject pieceToMove = selectedSquareScript.GetPiece();
+                                acceptingPlayerInput = false;
+                                StartCoroutine(RunQuiz(correct =>
                                 {
-                                    if (hit.collider.gameObject.GetComponent<SquareScript>().GetPieceType() == Piece.PieceType.Sigma &&
-                                        hit.collider.gameObject.GetComponent<SquareScript>().GetZ() == 7)
+                                    if (correct)
                                     {
-                                        Destroy(hit.collider.gameObject.GetComponent<SquareScript>().GetPiece());
-                                        hit.collider.gameObject.GetComponent<SquareScript>().AssignPiece(Instantiate(whiteInfiniteSumPrefab, transform.position, rotation));
+                                        // perform capture
+                                        if (hitSquare.GetPiece() != null)
+                                            Destroy(hitSquare.GetPiece());
+
+                                        hitSquare.AssignPiece(pieceToMove);
+                                        oldSelectedScript.UnassignPiece();
+                                        Debug.Log("Captured: moved " + hitSquare.GetPiece() + " to " + hitObject.name);
+
+                                        // Promotion check only if move succeeded
+                                        if (isWhite)
+                                        {
+                                            if (hitSquare.GetPieceType() == Piece.PieceType.Sigma && hitSquare.GetZ() == 7)
+                                            {
+                                                Destroy(hitSquare.GetPiece());
+                                                hitSquare.AssignPiece(Instantiate(whiteInfiniteSumPrefab, transform.position, rotation));
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (hitSquare.GetPieceType() == Piece.PieceType.Sigma && hitSquare.GetZ() == 7)
+                                            {
+                                                Destroy(hitSquare.GetPiece());
+                                                hitSquare.AssignPiece(Instantiate(blackInfiniteSumPrefab, transform.position, rotation));
+                                            }
+                                        }
                                     }
-                                }
-                                else
-                                {
-                                    if (hit.collider.gameObject.GetComponent<SquareScript>().GetPieceType() == Piece.PieceType.Sigma &&
-                                        hit.collider.gameObject.GetComponent<SquareScript>().GetZ() == 7)
+                                    else
                                     {
-                                        Destroy(hit.collider.gameObject.GetComponent<SquareScript>().GetPiece());
-                                        hit.collider.gameObject.GetComponent<SquareScript>().AssignPiece(Instantiate(blackInfiniteSumPrefab, transform.position, rotation));
+                                        Debug.Log("Capture quiz failed - capture not performed");
                                     }
-                                }
-                                DisableAllHighlights();
-                                StartCoroutine(SwitchSides());
+
+                                    // cleanup & switch sides regardless of result
+                                    selectedSquare = null;
+                                    DisableAllHighlights();
+                                    StartCoroutine(SwitchSides());
+                                }));
+                                return;
                             }
                         }
-                        else if (!selectedSquare.gameObject.GetComponent<SquareScript>().CanMoveToSquare(
-                                     hit.collider.gameObject.GetComponent<SquareScript>().GetX(),
-                                     hit.collider.gameObject.GetComponent<SquareScript>().GetZ())
-                                 && hit.collider.gameObject.GetComponent<SquareScript>().HasPiece()
-                                 && hit.collider.gameObject.GetComponent<SquareScript>().GetPiece().CompareTag(tagToCheck)) // select new square
+                        // Select a different friendly piece
+                        else if (!selectedSquareScript.CanMoveToSquare(targetX, targetZ) && targetHasPiece && hitSquare.GetPiece().CompareTag(tagToCheck))
                         {
-                            selectedSquare = hit.collider.gameObject;
-                            Debug.Log("Selected: " + selectedSquare.name + " Type: " + hit.collider.gameObject.GetComponent<SquareScript>().GetPieceType());
+                            selectedSquare = hitObject;
+                            Debug.Log("Selected: " + selectedSquare.name + " Type: " + hitSquare.GetPieceType());
                             HighlightAvailableSquares(selectedSquare);
                         }
                         else
@@ -320,7 +311,7 @@ public class GameManagerScript : MonoBehaviour
                 }
             }
         }
-        Debug.Log(lastResult);
+        Debug.Log(gotQuestionRight);
     }
     
     private IEnumerator AskQuestion()
@@ -345,7 +336,8 @@ public class GameManagerScript : MonoBehaviour
     private IEnumerator RunQuiz(Action<bool> onComplete)
     {
         yield return StartCoroutine(AskQuestion());
-        onComplete?.Invoke(lastResult);
+        // pass the result produced by AskQuestion to the caller
+        onComplete?.Invoke(gotQuestionRight);
     }
 
 

@@ -8,6 +8,7 @@ public class QuestionManagerScript : MonoBehaviour
     public Canvas canvas;
     public RawImage image;
     private QuestionScript currentChosenQuestion;
+    public bool lastAnswerCorrect = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
