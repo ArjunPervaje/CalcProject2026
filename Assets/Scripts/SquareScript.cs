@@ -3,7 +3,7 @@ using UnityEngine;
 public class SquareScript : MonoBehaviour
 {
     private GameObject piece = null;
-    private bool isSelected = false;
+    // private bool isSelected = false;
 
     private int x;
     private int z;
