@@ -234,7 +234,7 @@ public class GameManagerScript : MonoBehaviour
                                 }
                                 else
                                 {
-                                    if (hitSquare.GetPieceType() == Piece.PieceType.Sigma && hitSquare.GetZ() == 7)
+                                    if (hitSquare.GetPieceType() == Piece.PieceType.Sigma && hitSquare.GetZ() == 0)
                                     {
                                         Destroy(hitSquare.GetPiece());
                                         hitSquare.AssignPiece(Instantiate(blackInfiniteSumPrefab, transform.position, rotation));
@@ -274,7 +274,7 @@ public class GameManagerScript : MonoBehaviour
                                         }
                                         else
                                         {
-                                            if (hitSquare.GetPieceType() == Piece.PieceType.Sigma && hitSquare.GetZ() == 7)
+                                            if (hitSquare.GetPieceType() == Piece.PieceType.Sigma && hitSquare.GetZ() == 0)
                                             {
                                                 Destroy(hitSquare.GetPiece());
                                                 hitSquare.AssignPiece(Instantiate(blackInfiniteSumPrefab, transform.position, rotation));
@@ -311,12 +311,28 @@ public class GameManagerScript : MonoBehaviour
                 }
             }
         }
-        Debug.Log(gotQuestionRight);
     }
     
     private IEnumerator AskQuestion()
     {
-        questionManager.DisplayQuestion();
+        switch (selectedSquare.gameObject.GetComponent<SquareScript>().GetPieceType())
+        {
+            case Piece.PieceType.Sigma:
+                questionManager.DisplayQuestion(QuestionManagerScript.QuestionToGet.Series);
+                break;
+            case Piece.PieceType.InfiniteSum:
+                questionManager.DisplayQuestion(QuestionManagerScript.QuestionToGet.Series);
+                break;
+            case Piece.PieceType.DeltaEpsilon:
+                questionManager.DisplayQuestion(QuestionManagerScript.QuestionToGet.Medium);
+                break;
+            case Piece.PieceType.Function:
+                questionManager.DisplayQuestion(QuestionManagerScript.QuestionToGet.Medium);
+                break;
+            default:
+                questionManager.DisplayQuestion(QuestionManagerScript.QuestionToGet.Any);
+                break;
+        }
 
         char choice = '\0';
         while (choice == '\0')

@@ -12,7 +12,7 @@ public class QuestionScript
         Optimization,
         PolarCoordinates,
         Parametric,
-        TaylorAndMacLaurinSeries,
+        Series,
     }
 
     public enum Level
@@ -24,7 +24,7 @@ public class QuestionScript
     public enum Difficulty
     {
         Easy,
-        Normal,
+        Medium,
         Hard,
     }
 
@@ -59,5 +59,20 @@ public class QuestionScript
     public Texture GetSprite()
     {
         return question;
+    }
+
+    public Level GetLevel()
+    {
+        return level;
+    }
+
+    public Unit GetUnit()
+    {
+        return unit;
+    }
+
+    public Difficulty GetDifficulty()
+    {
+        return difficulty;
     }
 }
