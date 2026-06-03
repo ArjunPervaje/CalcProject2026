@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class AbVsBc : MonoBehaviour
 {
@@ -14,7 +15,10 @@ public class AbVsBc : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
+        {
+            Application.Quit();
+        }
     }
 
     public void SetLevelAb()
