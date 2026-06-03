@@ -75,6 +75,16 @@ public class QuestionManagerScript : MonoBehaviour
         // BC Polar Coordinates Medium
         
         // BC Parametric Easy
+        questions.Add(new QuestionScript(Resources.Load<Texture>("BC_Parametric_Easy_(B)_1"), QuestionScript.Answer.B, QuestionScript.Unit.Parametric, QuestionScript.Level.Bc, QuestionScript.Difficulty.Easy));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("BC_Parametric_Easy_(B)_2"), QuestionScript.Answer.B, QuestionScript.Unit.Parametric, QuestionScript.Level.Bc, QuestionScript.Difficulty.Easy));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("BC_Parametric_Easy_(A)_3"), QuestionScript.Answer.A, QuestionScript.Unit.Parametric, QuestionScript.Level.Bc, QuestionScript.Difficulty.Easy));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("BC_Parametric_Easy_(D)_4"), QuestionScript.Answer.D, QuestionScript.Unit.Parametric, QuestionScript.Level.Bc, QuestionScript.Difficulty.Easy));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("BC_Parametric_Easy_(C)_5"), QuestionScript.Answer.C, QuestionScript.Unit.Parametric, QuestionScript.Level.Bc, QuestionScript.Difficulty.Easy));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("BC_Parametric_Easy_(C)_6"), QuestionScript.Answer.C, QuestionScript.Unit.Parametric, QuestionScript.Level.Bc, QuestionScript.Difficulty.Easy));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("BC_Parametric_Easy_(B)_7"), QuestionScript.Answer.B, QuestionScript.Unit.Parametric, QuestionScript.Level.Bc, QuestionScript.Difficulty.Easy));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("BC_Parametric_Easy_(B)_8"), QuestionScript.Answer.B, QuestionScript.Unit.Parametric, QuestionScript.Level.Bc, QuestionScript.Difficulty.Easy));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("BC_Parametric_Easy_(B)_9"), QuestionScript.Answer.B, QuestionScript.Unit.Parametric, QuestionScript.Level.Bc, QuestionScript.Difficulty.Easy));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("BC_Parametric_Easy_(A)_10"), QuestionScript.Answer.A, QuestionScript.Unit.Parametric, QuestionScript.Level.Bc, QuestionScript.Difficulty.Easy));
         
         // BC Series Hard
     }
