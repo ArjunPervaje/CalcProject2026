@@ -108,11 +108,25 @@ public class QuestionManagerScript : MonoBehaviour
         questions.Add(new QuestionScript(Resources.Load<Texture>("AbImp10"), QuestionScript.Answer.A, QuestionScript.Unit.ImplicitDifferentiation, QuestionScript.Level.Ab, QuestionScript.Difficulty.Medium));
         
         // AB Related Rates Medium
-        
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbRel1"), QuestionScript.Answer.A, QuestionScript.Unit.RelatedRates, QuestionScript.Level.Ab, QuestionScript.Difficulty.Medium));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbRel2"), QuestionScript.Answer.C, QuestionScript.Unit.RelatedRates, QuestionScript.Level.Ab, QuestionScript.Difficulty.Medium));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbRel7"), QuestionScript.Answer.D, QuestionScript.Unit.RelatedRates, QuestionScript.Level.Ab, QuestionScript.Difficulty.Medium));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbRel8"), QuestionScript.Answer.A, QuestionScript.Unit.RelatedRates, QuestionScript.Level.Ab, QuestionScript.Difficulty.Medium));
         
         // AB Optimization Medium
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbOpt1"), QuestionScript.Answer.B, QuestionScript.Unit.Optimization, QuestionScript.Level.Ab, QuestionScript.Difficulty.Medium));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbOpt2"), QuestionScript.Answer.D, QuestionScript.Unit.Optimization, QuestionScript.Level.Ab, QuestionScript.Difficulty.Medium));
         
         // AB Series Hard
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbSer1"), QuestionScript.Answer.A, QuestionScript.Unit.Series, QuestionScript.Level.Ab, QuestionScript.Difficulty.Hard));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbSer2"), QuestionScript.Answer.C, QuestionScript.Unit.Series, QuestionScript.Level.Ab, QuestionScript.Difficulty.Hard));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbSer3"), QuestionScript.Answer.B, QuestionScript.Unit.Series, QuestionScript.Level.Ab, QuestionScript.Difficulty.Hard));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbSer4"), QuestionScript.Answer.C, QuestionScript.Unit.Series, QuestionScript.Level.Ab, QuestionScript.Difficulty.Hard));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbSer5"), QuestionScript.Answer.A, QuestionScript.Unit.Series, QuestionScript.Level.Ab, QuestionScript.Difficulty.Hard));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbSer6"), QuestionScript.Answer.A, QuestionScript.Unit.Series, QuestionScript.Level.Ab, QuestionScript.Difficulty.Hard));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbSer7"), QuestionScript.Answer.A, QuestionScript.Unit.Series, QuestionScript.Level.Ab, QuestionScript.Difficulty.Hard));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbSer8"), QuestionScript.Answer.D, QuestionScript.Unit.Series, QuestionScript.Level.Ab, QuestionScript.Difficulty.Hard));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbSer9"), QuestionScript.Answer.B, QuestionScript.Unit.Series, QuestionScript.Level.Ab, QuestionScript.Difficulty.Hard));
         
         // BC Integrals Easy
         questions.Add(new QuestionScript(Resources.Load<Texture>("Question80"), QuestionScript.Answer.A, QuestionScript.Unit.Integrals, QuestionScript.Level.Bc, QuestionScript.Difficulty.Easy));
