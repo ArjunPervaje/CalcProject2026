@@ -127,15 +127,18 @@ public class GameManagerScript : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, 100f))
         {
-            Debug.Log("Hit: " + hit.collider.gameObject.name);
-            GameObject hitObject = hit.collider.gameObject;
-            SquareScript hitSquare = hitObject.GetComponent<SquareScript>();
-            if (hitSquare == null)
-            {
-                Debug.Log("Clicked non-board object: " + hitObject.name);
-                return;
-            }
-            string tagToCheck = isWhite ? "WhitePiece" : "BlackPiece";
+        Debug.Log("Hit collider: " + hit.collider.gameObject.name);
+        GameObject clickedObj = hit.collider.gameObject;
+        // find the SquareScript on the object or its parents (pieces may be child objects of the square)
+        SquareScript hitSquare = clickedObj.GetComponentInParent<SquareScript>();
+        if (hitSquare == null)
+        {
+            Debug.Log("Clicked non-board object: " + clickedObj.name);
+            return;
+        }
+        GameObject hitObject = hitSquare.gameObject;
+        Debug.Log("Resolved square: " + hitObject.name);
+        string tagToCheck = isWhite ? "WhitePiece" : "BlackPiece";
 
             // If nothing selected yet, try selecting this square's piece
             if (selectedSquare == null && hitSquare.HasPiece())
