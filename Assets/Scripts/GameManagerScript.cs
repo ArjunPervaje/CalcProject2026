@@ -80,30 +80,38 @@ public class GameManagerScript : MonoBehaviour
             rotation = Quaternion.identity;
             mainCamera.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
         }
-        
-        if (acceptingPlayerInput)
+    }
+
+    void Update()
+    {
+        if (!acceptingPlayerInput) return;
+
+        if (Keyboard.current != null && Keyboard.current.rKey.wasPressedThisFrame)
         {
-            if (Keyboard.current != null && Keyboard.current.rKey.wasPressedThisFrame)
-            {
-                GameRestart();
-            }
-            
-            if (Mouse.current.leftButton.wasReleasedThisFrame)
-            {
-                Vector2 mousePos = Mouse.current.position.ReadValue();
-                Ray ray = mainCamera.GetComponent<Camera>().ScreenPointToRay(mousePos);
-                RaycastHit hit;
-                
-                if (Physics.Raycast(ray, out hit))
-                {
-                    //if (hit.collider.gameObject.GetComponent<SquareScript>().HasPiece())
-                    //{
-                        
-                    //}
-                    Debug.Log("Hit: " + hit.collider.gameObject.name);
-                    GameObject hitObject = hit.collider.gameObject;
-                    SquareScript hitSquare = hitObject.GetComponent<SquareScript>();
-                    string tagToCheck = isWhite ? "WhitePiece" : "BlackPiece";
+            GameRestart();
+        }
+
+        if (Mouse.current.leftButton.wasPressedThisFrame)
+        {
+            HandleMouseClick();
+        }
+    }
+
+    void HandleMouseClick()
+    {
+        Vector2 mousePos = Mouse.current.position.ReadValue();
+        Ray ray = mainCamera.GetComponent<Camera>().ScreenPointToRay(mousePos);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            Debug.Log("Hit: " + hit.collider.gameObject.name);
+            GameObject hitObject = hit.collider.gameObject;
+            SquareScript hitSquare = hitObject.GetComponent<SquareScript>();
+            if (hitSquare == null)
+                return;
+
+            string tagToCheck = isWhite ? "WhitePiece" : "BlackPiece";
 
                     // If nothing selected yet, try selecting this square's piece
                     if (selectedSquare == null && hitSquare.HasPiece())
@@ -347,7 +355,6 @@ public class GameManagerScript : MonoBehaviour
                         }
                     }
                 }
-            }
         }
     }
     
