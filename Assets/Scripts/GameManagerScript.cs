@@ -33,8 +33,10 @@ public class GameManagerScript : MonoBehaviour
     
     // Camera (reference to the scene's main camera)
     private GameObject mainCamera;
+    private Camera mainCam;
 
     private bool acceptingPlayerInput = true;
+    private float lastClickTime = 0f;
 
     public bool isWhite;
     private Quaternion rotation;
@@ -64,6 +66,7 @@ public class GameManagerScript : MonoBehaviour
         location by doing board[x, y].transform.position.x or .z for x and z respectfully */
 
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+        if (mainCamera != null) mainCam = mainCamera.GetComponent<Camera>();
         
         GameRestart();
     }
@@ -88,10 +91,14 @@ public class GameManagerScript : MonoBehaviour
                 GameRestart();
             }
             
-            if (Mouse.current.leftButton.wasReleasedThisFrame)
+            if (Mouse.current.leftButton.wasPressedThisFrame)
             {
+                // simple debounce to avoid missed/duplicate clicks
+                if (Time.time - lastClickTime < 0.05f)
+                    return;
+                lastClickTime = Time.time;
                 Vector2 mousePos = Mouse.current.position.ReadValue();
-                Ray ray = mainCamera.GetComponent<Camera>().ScreenPointToRay(mousePos);
+                Ray ray = (mainCam != null ? mainCam : mainCamera.GetComponent<Camera>()).ScreenPointToRay(mousePos);
                 RaycastHit hit;
                 
                 if (Physics.Raycast(ray, out hit))
@@ -103,6 +110,11 @@ public class GameManagerScript : MonoBehaviour
                     Debug.Log("Hit: " + hit.collider.gameObject.name);
                     GameObject hitObject = hit.collider.gameObject;
                     SquareScript hitSquare = hitObject.GetComponent<SquareScript>();
+                    if (hitSquare == null)
+                    {
+                        Debug.Log("Clicked non-board object: " + hitObject.name);
+                        return;
+                    }
                     string tagToCheck = isWhite ? "WhitePiece" : "BlackPiece";
 
                     // If nothing selected yet, try selecting this square's piece
