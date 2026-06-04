@@ -41,8 +41,37 @@ public class QuestionManagerScript : MonoBehaviour
         questions.Add(new QuestionScript(Resources.Load<Texture>("Question9"), QuestionScript.Answer.A, QuestionScript.Unit.Derivatives, QuestionScript.Level.Ab, QuestionScript.Difficulty.Easy));
         questions.Add(new QuestionScript(Resources.Load<Texture>("Question10"), QuestionScript.Answer.D, QuestionScript.Unit.Derivatives, QuestionScript.Level.Ab, QuestionScript.Difficulty.Easy));
         questions.Add(new QuestionScript(Resources.Load<Texture>("Question11"), QuestionScript.Answer.C, QuestionScript.Unit.Derivatives, QuestionScript.Level.Ab, QuestionScript.Difficulty.Easy));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbDer12"), QuestionScript.Answer.A, QuestionScript.Unit.Derivatives, QuestionScript.Level.Ab, QuestionScript.Difficulty.Easy));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbDer13"), QuestionScript.Answer.C, QuestionScript.Unit.Derivatives, QuestionScript.Level.Ab, QuestionScript.Difficulty.Easy));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbDer14"), QuestionScript.Answer.A, QuestionScript.Unit.Derivatives, QuestionScript.Level.Ab, QuestionScript.Difficulty.Easy));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbDer15"), QuestionScript.Answer.B, QuestionScript.Unit.Derivatives, QuestionScript.Level.Ab, QuestionScript.Difficulty.Easy));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbDer16"), QuestionScript.Answer.A, QuestionScript.Unit.Derivatives, QuestionScript.Level.Ab, QuestionScript.Difficulty.Easy));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbDer17"), QuestionScript.Answer.D, QuestionScript.Unit.Derivatives, QuestionScript.Level.Ab, QuestionScript.Difficulty.Easy));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbDer18"), QuestionScript.Answer.B, QuestionScript.Unit.Derivatives, QuestionScript.Level.Ab, QuestionScript.Difficulty.Easy));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbDer19"), QuestionScript.Answer.A, QuestionScript.Unit.Derivatives, QuestionScript.Level.Ab, QuestionScript.Difficulty.Easy));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbDer20"), QuestionScript.Answer.C, QuestionScript.Unit.Derivatives, QuestionScript.Level.Ab, QuestionScript.Difficulty.Easy));
         
         // AB Integrals Easy
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbInt1"), QuestionScript.Answer.B, QuestionScript.Unit.Integrals, QuestionScript.Level.Ab, QuestionScript.Difficulty.Easy));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbInt2"), QuestionScript.Answer.C, QuestionScript.Unit.Integrals, QuestionScript.Level.Ab, QuestionScript.Difficulty.Easy));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbInt3"), QuestionScript.Answer.A, QuestionScript.Unit.Integrals, QuestionScript.Level.Ab, QuestionScript.Difficulty.Easy));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbInt4"), QuestionScript.Answer.B, QuestionScript.Unit.Integrals, QuestionScript.Level.Ab, QuestionScript.Difficulty.Easy));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbInt5"), QuestionScript.Answer.D, QuestionScript.Unit.Integrals, QuestionScript.Level.Ab, QuestionScript.Difficulty.Easy));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbInt6"), QuestionScript.Answer.C, QuestionScript.Unit.Integrals, QuestionScript.Level.Ab, QuestionScript.Difficulty.Easy));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbInt7"), QuestionScript.Answer.B, QuestionScript.Unit.Integrals, QuestionScript.Level.Ab, QuestionScript.Difficulty.Easy));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbInt8"), QuestionScript.Answer.C, QuestionScript.Unit.Integrals, QuestionScript.Level.Ab, QuestionScript.Difficulty.Easy));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbInt9"), QuestionScript.Answer.D, QuestionScript.Unit.Integrals, QuestionScript.Level.Ab, QuestionScript.Difficulty.Easy));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbInt10"), QuestionScript.Answer.C, QuestionScript.Unit.Integrals, QuestionScript.Level.Ab, QuestionScript.Difficulty.Easy));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbInt11"), QuestionScript.Answer.D, QuestionScript.Unit.Integrals, QuestionScript.Level.Ab, QuestionScript.Difficulty.Easy));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbInt12"), QuestionScript.Answer.A, QuestionScript.Unit.Integrals, QuestionScript.Level.Ab, QuestionScript.Difficulty.Easy));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbInt13"), QuestionScript.Answer.B, QuestionScript.Unit.Integrals, QuestionScript.Level.Ab, QuestionScript.Difficulty.Easy));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbInt14"), QuestionScript.Answer.C, QuestionScript.Unit.Integrals, QuestionScript.Level.Ab, QuestionScript.Difficulty.Easy));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbInt15"), QuestionScript.Answer.A, QuestionScript.Unit.Integrals, QuestionScript.Level.Ab, QuestionScript.Difficulty.Easy));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbInt16"), QuestionScript.Answer.D, QuestionScript.Unit.Integrals, QuestionScript.Level.Ab, QuestionScript.Difficulty.Easy));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbInt17"), QuestionScript.Answer.B, QuestionScript.Unit.Integrals, QuestionScript.Level.Ab, QuestionScript.Difficulty.Easy));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbInt18"), QuestionScript.Answer.D, QuestionScript.Unit.Integrals, QuestionScript.Level.Ab, QuestionScript.Difficulty.Easy));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbInt19"), QuestionScript.Answer.C, QuestionScript.Unit.Integrals, QuestionScript.Level.Ab, QuestionScript.Difficulty.Easy));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbInt20"), QuestionScript.Answer.A, QuestionScript.Unit.Integrals, QuestionScript.Level.Ab, QuestionScript.Difficulty.Easy));
         
         // AB Limits Easy
         
