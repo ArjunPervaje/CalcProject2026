@@ -147,6 +147,14 @@ public class QuestionManagerScript : MonoBehaviour
         questions.Add(new QuestionScript(Resources.Load<Texture>("Question93"), QuestionScript.Answer.A, QuestionScript.Unit.PolarCoordinates, QuestionScript.Level.Bc, QuestionScript.Difficulty.Easy));
         
         // BC Polar Coordinates Medium
+        questions.Add(new QuestionScript(Resources.Load<Texture>("BcPolM1"), QuestionScript.Answer.B, QuestionScript.Unit.PolarCoordinates, QuestionScript.Level.Bc, QuestionScript.Difficulty.Medium));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("BcPolM2"), QuestionScript.Answer.C, QuestionScript.Unit.PolarCoordinates, QuestionScript.Level.Bc, QuestionScript.Difficulty.Medium));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("BcPolM3"), QuestionScript.Answer.A, QuestionScript.Unit.PolarCoordinates, QuestionScript.Level.Bc, QuestionScript.Difficulty.Medium));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("BcPolM4"), QuestionScript.Answer.C, QuestionScript.Unit.PolarCoordinates, QuestionScript.Level.Bc, QuestionScript.Difficulty.Medium));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("BcPolM5"), QuestionScript.Answer.D, QuestionScript.Unit.PolarCoordinates, QuestionScript.Level.Bc, QuestionScript.Difficulty.Medium));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("BcPolM6"), QuestionScript.Answer.B, QuestionScript.Unit.PolarCoordinates, QuestionScript.Level.Bc, QuestionScript.Difficulty.Medium));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("BcPolM7"), QuestionScript.Answer.A, QuestionScript.Unit.PolarCoordinates, QuestionScript.Level.Bc, QuestionScript.Difficulty.Medium));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("BcPolM8"), QuestionScript.Answer.C, QuestionScript.Unit.PolarCoordinates, QuestionScript.Level.Bc, QuestionScript.Difficulty.Medium));
         
         // BC Parametric Easy
         questions.Add(new QuestionScript(Resources.Load<Texture>("BC_Parametric_Easy_(B)_1"), QuestionScript.Answer.B, QuestionScript.Unit.Parametric, QuestionScript.Level.Bc, QuestionScript.Difficulty.Easy));
@@ -161,6 +169,13 @@ public class QuestionManagerScript : MonoBehaviour
         questions.Add(new QuestionScript(Resources.Load<Texture>("BC_Parametric_Easy_(A)_10"), QuestionScript.Answer.A, QuestionScript.Unit.Parametric, QuestionScript.Level.Bc, QuestionScript.Difficulty.Easy));
         
         // BC Series Hard
+        questions.Add(new QuestionScript(Resources.Load<Texture>("BcSer1"), QuestionScript.Answer.C, QuestionScript.Unit.Series, QuestionScript.Level.Bc, QuestionScript.Difficulty.Hard));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("BcSer2"), QuestionScript.Answer.B, QuestionScript.Unit.Series, QuestionScript.Level.Bc, QuestionScript.Difficulty.Hard));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("BcSer3"), QuestionScript.Answer.B, QuestionScript.Unit.Series, QuestionScript.Level.Bc, QuestionScript.Difficulty.Hard));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("BcSer4"), QuestionScript.Answer.A, QuestionScript.Unit.Series, QuestionScript.Level.Bc, QuestionScript.Difficulty.Hard));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("BcSer5"), QuestionScript.Answer.D, QuestionScript.Unit.Series, QuestionScript.Level.Bc, QuestionScript.Difficulty.Hard));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("BcSer6"), QuestionScript.Answer.B, QuestionScript.Unit.Series, QuestionScript.Level.Bc, QuestionScript.Difficulty.Hard));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("BcSer7"), QuestionScript.Answer.A, QuestionScript.Unit.Series, QuestionScript.Level.Bc, QuestionScript.Difficulty.Hard));
     }
 
     // Update is called once per frame
