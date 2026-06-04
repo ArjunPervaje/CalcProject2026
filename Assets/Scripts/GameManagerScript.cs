@@ -195,6 +195,44 @@ public class GameManagerScript : MonoBehaviour
                             if (hitSquare.GetPiece().CompareTag(tagToCheck)) // combining
                             {
                                 Piece.PieceType typeOfInitialPiece = selectedSquareScript.GetPieceType();
+
+                                // If a Sigma is swapping into a square on the promotion rank, require a quiz before performing the swap/promotion
+                                bool sigmaSwappingIntoPromotionRank = (typeOfInitialPiece == Piece.PieceType.Sigma) && ((isWhite && hitSquare.GetZ() == 7) || (!isWhite && hitSquare.GetZ() == 0));
+
+                                if (sigmaSwappingIntoPromotionRank)
+                                {
+                                    GameObject oldSelected = selectedSquare;
+                                    SquareScript oldSelectedScript = selectedSquareScript;
+                                    acceptingPlayerInput = false;
+                                    StartCoroutine(RunQuiz(correct =>
+                                    {
+                                        if (correct)
+                                        {
+                                            // perform the swap (move the hit square's piece back to the selected square and place a Sigma on the hit square)
+                                            Destroy(oldSelectedScript.GetPiece());
+                                            selectedSquareScript.AssignPiece(hitSquare.GetPiece());
+                                            hitSquare.UnassignPiece();
+                                            hitSquare.AssignPiece(isWhite ? Instantiate(whiteSigmaPrefab, transform.position, rotation) : Instantiate(blackSigmaPrefab, transform.position, rotation));
+
+                                            // Immediately promote the Sigma on the promotion rank
+                                            Destroy(hitSquare.GetPiece());
+                                            hitSquare.AssignPiece(isWhite ? Instantiate(whiteInfiniteSumPrefab, transform.position, rotation) : Instantiate(blackInfiniteSumPrefab, transform.position, rotation));
+                                        }
+                                        else
+                                        {
+                                            Debug.Log("Swap quiz failed - swap not performed");
+                                        }
+
+                                        // cleanup & switch sides regardless of result
+                                        selectedSquare = null;
+                                        DisableAllHighlights();
+                                        StartCoroutine(SwitchSides());
+                                    }));
+
+                                    return;
+                                }
+
+                                // Default combining behaviour when no special quiz required
                                 Destroy(selectedSquareScript.GetPiece());
                                 if (typeOfInitialPiece != Piece.PieceType.Sigma)
                                 {
