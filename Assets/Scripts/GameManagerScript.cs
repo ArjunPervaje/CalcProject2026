@@ -35,6 +35,9 @@ public class GameManagerScript : MonoBehaviour
     private GameObject mainCamera;
     private Camera mainCam;
 
+    // Optional: assign a layer mask in the inspector that includes the board and piece layers only
+    public LayerMask boardLayerMask;
+
     private bool acceptingPlayerInput = true;
     private float lastClickTime = 0f;
 
@@ -96,7 +99,12 @@ public class GameManagerScript : MonoBehaviour
                 Camera cam = (mainCam != null ? mainCam : (mainCamera != null ? mainCamera.GetComponent<Camera>() : Camera.main));
                 Ray ray = cam.ScreenPointToRay(mousePos);
                 
-                RaycastHit[] hits = Physics.RaycastAll(ray, 1000f);
+                        RaycastHit[] hits;
+                // Use a small sphere cast to be tolerant of thin colliders, and prefer an inspector-assigned layer mask if provided.
+                float sphereRadius = 0.12f;
+                int mask = (boardLayerMask != 0) ? boardLayerMask.value : ~0;
+                hits = Physics.SphereCastAll(ray, sphereRadius, 1000f, mask, QueryTriggerInteraction.Ignore);
+
                 if (hits != null && hits.Length > 0)
                 {
                     System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
@@ -108,14 +116,14 @@ public class GameManagerScript : MonoBehaviour
                         hitSquare = hitObject.GetComponentInParent<SquareScript>();
                         if (hitSquare != null)
                         {
-                            Debug.Log("Hit collider: " + h.collider.gameObject.name + " -> Resolved square: " + hitSquare.gameObject.name);
+                            Debug.Log("Hit collider: " + h.collider.gameObject.name + " -> Resolved square: " + hitSquare.gameObject.name + " (dist=" + h.distance + ")");
                             break;
                         }
                     }
 
                     if (hitSquare == null)
                     {
-                        Debug.Log("No board square hit by raycast");
+                        Debug.Log("No board square hit by spherecast");
                         return;
                     }
 
