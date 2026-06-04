@@ -96,9 +96,19 @@ public class QuestionManagerScript : MonoBehaviour
         questions.Add(new QuestionScript(Resources.Load<Texture>("AbLim20"), QuestionScript.Answer.B, QuestionScript.Unit.Limits, QuestionScript.Level.Ab, QuestionScript.Difficulty.Easy));
         
         // AB Implicit Differentiation Medium
-        
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbImp1"), QuestionScript.Answer.A, QuestionScript.Unit.ImplicitDifferentiation, QuestionScript.Level.Ab, QuestionScript.Difficulty.Medium));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbImp2"), QuestionScript.Answer.B, QuestionScript.Unit.ImplicitDifferentiation, QuestionScript.Level.Ab, QuestionScript.Difficulty.Medium));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbImp3"), QuestionScript.Answer.C, QuestionScript.Unit.ImplicitDifferentiation, QuestionScript.Level.Ab, QuestionScript.Difficulty.Medium));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbImp4"), QuestionScript.Answer.A, QuestionScript.Unit.ImplicitDifferentiation, QuestionScript.Level.Ab, QuestionScript.Difficulty.Medium));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbImp5"), QuestionScript.Answer.D, QuestionScript.Unit.ImplicitDifferentiation, QuestionScript.Level.Ab, QuestionScript.Difficulty.Medium));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbImp6"), QuestionScript.Answer.B, QuestionScript.Unit.ImplicitDifferentiation, QuestionScript.Level.Ab, QuestionScript.Difficulty.Medium));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbImp7"), QuestionScript.Answer.C, QuestionScript.Unit.ImplicitDifferentiation, QuestionScript.Level.Ab, QuestionScript.Difficulty.Medium));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbImp8"), QuestionScript.Answer.B, QuestionScript.Unit.ImplicitDifferentiation, QuestionScript.Level.Ab, QuestionScript.Difficulty.Medium));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbImp9"), QuestionScript.Answer.D, QuestionScript.Unit.ImplicitDifferentiation, QuestionScript.Level.Ab, QuestionScript.Difficulty.Medium));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbImp10"), QuestionScript.Answer.A, QuestionScript.Unit.ImplicitDifferentiation, QuestionScript.Level.Ab, QuestionScript.Difficulty.Medium));
         
         // AB Related Rates Medium
+        
         
         // AB Optimization Medium
         
