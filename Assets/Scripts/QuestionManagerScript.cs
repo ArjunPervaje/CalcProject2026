@@ -74,8 +74,29 @@ public class QuestionManagerScript : MonoBehaviour
         questions.Add(new QuestionScript(Resources.Load<Texture>("AbInt20"), QuestionScript.Answer.A, QuestionScript.Unit.Integrals, QuestionScript.Level.Ab, QuestionScript.Difficulty.Easy));
         
         // AB Limits Easy
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbLim1"), QuestionScript.Answer.C, QuestionScript.Unit.Limits, QuestionScript.Level.Ab, QuestionScript.Difficulty.Easy));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbLim2"), QuestionScript.Answer.A, QuestionScript.Unit.Limits, QuestionScript.Level.Ab, QuestionScript.Difficulty.Easy));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbLim3"), QuestionScript.Answer.B, QuestionScript.Unit.Limits, QuestionScript.Level.Ab, QuestionScript.Difficulty.Easy));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbLim4"), QuestionScript.Answer.C, QuestionScript.Unit.Limits, QuestionScript.Level.Ab, QuestionScript.Difficulty.Easy));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbLim5"), QuestionScript.Answer.D, QuestionScript.Unit.Limits, QuestionScript.Level.Ab, QuestionScript.Difficulty.Easy));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbLim6"), QuestionScript.Answer.B, QuestionScript.Unit.Limits, QuestionScript.Level.Ab, QuestionScript.Difficulty.Easy));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbLim7"), QuestionScript.Answer.A, QuestionScript.Unit.Limits, QuestionScript.Level.Ab, QuestionScript.Difficulty.Easy));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbLim8"), QuestionScript.Answer.C, QuestionScript.Unit.Limits, QuestionScript.Level.Ab, QuestionScript.Difficulty.Easy));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbLim9"), QuestionScript.Answer.B, QuestionScript.Unit.Limits, QuestionScript.Level.Ab, QuestionScript.Difficulty.Easy));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbLim10"), QuestionScript.Answer.A, QuestionScript.Unit.Limits, QuestionScript.Level.Ab, QuestionScript.Difficulty.Easy));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbLim11"), QuestionScript.Answer.D, QuestionScript.Unit.Limits, QuestionScript.Level.Ab, QuestionScript.Difficulty.Easy));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbLim12"), QuestionScript.Answer.C, QuestionScript.Unit.Limits, QuestionScript.Level.Ab, QuestionScript.Difficulty.Easy));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbLim13"), QuestionScript.Answer.A, QuestionScript.Unit.Limits, QuestionScript.Level.Ab, QuestionScript.Difficulty.Easy));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbLim14"), QuestionScript.Answer.C, QuestionScript.Unit.Limits, QuestionScript.Level.Ab, QuestionScript.Difficulty.Easy));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbLim15"), QuestionScript.Answer.D, QuestionScript.Unit.Limits, QuestionScript.Level.Ab, QuestionScript.Difficulty.Easy));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbLim16"), QuestionScript.Answer.A, QuestionScript.Unit.Limits, QuestionScript.Level.Ab, QuestionScript.Difficulty.Easy));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbLim17"), QuestionScript.Answer.B, QuestionScript.Unit.Limits, QuestionScript.Level.Ab, QuestionScript.Difficulty.Easy));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbLim18"), QuestionScript.Answer.D, QuestionScript.Unit.Limits, QuestionScript.Level.Ab, QuestionScript.Difficulty.Easy));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbLim19"), QuestionScript.Answer.A, QuestionScript.Unit.Limits, QuestionScript.Level.Ab, QuestionScript.Difficulty.Easy));
+        questions.Add(new QuestionScript(Resources.Load<Texture>("AbLim20"), QuestionScript.Answer.B, QuestionScript.Unit.Limits, QuestionScript.Level.Ab, QuestionScript.Difficulty.Easy));
         
         // AB Implicit Differentiation Medium
+        
         
         // AB Related Rates Medium
         
