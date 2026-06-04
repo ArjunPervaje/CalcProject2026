@@ -33,13 +33,8 @@ public class GameManagerScript : MonoBehaviour
     
     // Camera (reference to the scene's main camera)
     private GameObject mainCamera;
-    private Camera mainCam;
-
-    // Optional: assign a layer mask in the inspector that includes the board and piece layers only
-    public LayerMask boardLayerMask;
 
     private bool acceptingPlayerInput = true;
-    private float lastClickTime = 0f;
 
     public bool isWhite;
     private Quaternion rotation;
@@ -96,37 +91,18 @@ public class GameManagerScript : MonoBehaviour
             if (Mouse.current.leftButton.wasReleasedThisFrame)
             {
                 Vector2 mousePos = Mouse.current.position.ReadValue();
-                Camera cam = (mainCam != null ? mainCam : (mainCamera != null ? mainCamera.GetComponent<Camera>() : Camera.main));
-                Ray ray = cam.ScreenPointToRay(mousePos);
+                Ray ray = mainCamera.GetComponent<Camera>().ScreenPointToRay(mousePos);
+                RaycastHit hit;
                 
-                        RaycastHit[] hits;
-                // Use a small sphere cast to be tolerant of thin colliders, and prefer an inspector-assigned layer mask if provided.
-                float sphereRadius = 0.12f;
-                int mask = (boardLayerMask != 0) ? boardLayerMask.value : ~0;
-                hits = Physics.SphereCastAll(ray, sphereRadius, 1000f, mask, QueryTriggerInteraction.Ignore);
-
-                if (hits != null && hits.Length > 0)
+                if (Physics.Raycast(ray, out hit))
                 {
-                    System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
-                    SquareScript hitSquare = null;
-                    GameObject hitObject = null;
-                    foreach (var h in hits)
-                    {
-                        hitObject = h.collider.gameObject;
-                        hitSquare = hitObject.GetComponentInParent<SquareScript>();
-                        if (hitSquare != null)
-                        {
-                            Debug.Log("Hit collider: " + h.collider.gameObject.name + " -> Resolved square: " + hitSquare.gameObject.name + " (dist=" + h.distance + ")");
-                            break;
-                        }
-                    }
-
-                    if (hitSquare == null)
-                    {
-                        Debug.Log("No board square hit by spherecast");
-                        return;
-                    }
-
+                    //if (hit.collider.gameObject.GetComponent<SquareScript>().HasPiece())
+                    //{
+                        
+                    //}
+                    Debug.Log("Hit: " + hit.collider.gameObject.name);
+                    GameObject hitObject = hit.collider.gameObject;
+                    SquareScript hitSquare = hitObject.GetComponent<SquareScript>();
                     string tagToCheck = isWhite ? "WhitePiece" : "BlackPiece";
 
                     // If nothing selected yet, try selecting this square's piece
